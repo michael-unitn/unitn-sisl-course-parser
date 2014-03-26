@@ -5,25 +5,25 @@ A SAX parser for the Q&amp;A corpus provided as part of the assignment for cours
 
 Usage Example (import course-parser-0.1.jar into your project)
 =============
-{
-import it.unitn.sisl.t4e.handler.CourseHandler;
-import it.unitn.sisl.t4e.pojos.Answer;
-import it.unitn.sisl.t4e.pojos.Course;
-import it.unitn.sisl.t4e.pojos.Lecture;
-import it.unitn.sisl.t4e.pojos.Question;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+    import it.unitn.sisl.t4e.handler.CourseHandler;
+    import it.unitn.sisl.t4e.pojos.Answer;
+    import it.unitn.sisl.t4e.pojos.Course;
+    import it.unitn.sisl.t4e.pojos.Lecture;
+    import it.unitn.sisl.t4e.pojos.Question;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+    import java.io.File;
+    import java.io.IOException;
+    import java.util.List;
 
-import org.xml.sax.SAXException;
+    import javax.xml.parsers.ParserConfigurationException;
+    import javax.xml.parsers.SAXParser;
+    import javax.xml.parsers.SAXParserFactory;
+
+    import org.xml.sax.SAXException;
 
 
-public class TestParser {
+    public class TestParser {
 
 	public static void main(String[] args) {
 		SAXParserFactory parserFactory = SAXParserFactory.newInstance();
@@ -49,5 +49,5 @@ public class TestParser {
 			e.printStackTrace();
 		}
 	}
-}
-}
+    }
+
