@@ -5,7 +5,7 @@ A SAX parser for the Q&amp;A corpus provided as part of the assignment for cours
 
 Usage Example (import course-parser-0.1.jar into your project)
 =============
-
+{
 import it.unitn.sisl.t4e.handler.CourseHandler;
 import it.unitn.sisl.t4e.pojos.Answer;
 import it.unitn.sisl.t4e.pojos.Course;
@@ -50,4 +50,4 @@ public class TestParser {
 		}
 	}
 }
-
+}
