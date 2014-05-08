@@ -36,13 +36,37 @@ Usage Example (import course-parser-0.1.jar into your project)
                 for(Course course : courses){
                     System.out.println("Course " + course.getCourseId() + " " + course.getCourseTitle());
                     for(Lecture lecture : course.getLectures()){
-                        System.out.println("Lecture " + lecture.getLectureId() + " " + lecture.getLectureTitle() + " " + lecture.getLectureDate());
-                        for(Question question : lecture.getQuestions()){
-                            System.out.println("Question " + question.getQuestionId() + " " + question.getQuestionText());
-                            for(Answer answer : question.getAnswers()){
-                                System.out.println("Answer " + answer.getAnswerId() + " " + answer.getAnswerText() + " Votes: " + answer.getNumVotes());
-                            }
-                        }
+			System.out.println("Lecture " + lecture.getLectureId() + " " + lecture.getLectureTitle() + " " + lecture.getLectureDate());
+			//A loop on the entire corpus will take a while. We will therefore limit this example to just a few runs.
+			int sampleCount = 0;
+			for(Question question : lecture.getQuestions()){
+				if(sampleCount == 5){ //fiddle with at will
+					break;
+				}
+				if(question.getTokens().isEmpty()){
+					System.out.println("Question " + question.getQuestionId() + " " + question.getQuestionText());
+					for(Answer answer : question.getAnswers()){
+						System.out.println("Answer " + answer.getAnswerId() + " " + answer.getAnswerText() + " Votes: " + answer.getNumVotes());
+					}
+				}
+				else{
+					for(String token : question.getTokens()){
+						System.err.println("question token: " + token);
+					}
+					for(String sentence : question.getSentences()){
+						System.err.println("question sentence: " + sentence);
+					}
+					for(Answer answer : question.getAnswers()){
+						for(String token : answer.getTokens()){
+							System.err.println("answer token: " + token);
+						}
+						for(String sentence : answer.getSentences()){
+							System.err.println("answer sentence: " + sentence);
+						}
+					}
+				}
+				sampleCount++;
+			}
                     }
                 }
             } catch (ParserConfigurationException | SAXException | IOException e) {
