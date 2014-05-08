@@ -24,10 +24,18 @@ public class CourseHandler extends DefaultHandler {
 	private final String ANSWER = "answer";
 	private final String ANSWER_TEXT = "answer_text";
 	private final String NUM_VOTES = "num_votes";
+	private final String Q_TOKEN = "q_token";
+	private final String Q_SENTENCE = "q_sentence";
+	private final String A_TOKEN = "a_token";
+	private final String A_SENTENCE = "a_sentence";
 	
 	private boolean questionText = false;
 	private boolean answerText = false;
 	private boolean numVotes = false;
+	private boolean qToken = false;
+	private boolean qSentence = false;
+	private boolean aToken = false;
+	private boolean aSentence = false;
 	
 	private Course course = new Course();
 	private Lecture lecture = new Lecture();
@@ -38,6 +46,14 @@ public class CourseHandler extends DefaultHandler {
 	private List<Lecture> lectures = new ArrayList<Lecture>();
 	private List<Question> questions = new ArrayList<Question>();
 	private List<Answer> answers = new ArrayList<Answer>();
+	
+	private String questionTextChars = "";
+	private String answerTextChars = "";
+	private String numVotesChars = "";
+	private String qTokenChars = "";
+	private String qSentenceChars = "";
+	private String aTokenChars = "";
+	private String aSentenceChars = "";
 	
 	public List<Course> getCourses() {
 		return courses;
@@ -71,6 +87,18 @@ public class CourseHandler extends DefaultHandler {
 		else if(qName.equalsIgnoreCase(NUM_VOTES)){
 			numVotes = true;
 		}
+		else if(qName.equalsIgnoreCase(Q_TOKEN)){
+			qToken = true;
+		}
+		else if(qName.equalsIgnoreCase(Q_SENTENCE)){
+			qSentence = true;
+		}
+		else if(qName.equalsIgnoreCase(A_TOKEN)){
+			aToken = true;
+		}
+		else if(qName.equalsIgnoreCase(A_SENTENCE)){
+			aSentence = true;
+		}
 	}
 	@Override
 	public void endElement(String uri, String localName, String qName)
@@ -92,25 +120,71 @@ public class CourseHandler extends DefaultHandler {
 			question.setAnswers(completeAnswers);
 			answers = new ArrayList<Answer>();
 			questions.add(Question.copy(question));
+			question = new Question();
 		}
 		else if(qName.equalsIgnoreCase(ANSWER)){
 			answers.add(Answer.copy(answer));
+			answer = new Answer();
+		}
+		else if(qName.equalsIgnoreCase(QUESTION_TEXT)){
+			question.setQuestionText(questionTextChars);
+			questionTextChars = "";
+			questionText = false;
+		}
+		else if(qName.equalsIgnoreCase(ANSWER_TEXT)){
+			answer.setAnswerText(answerTextChars);
+			answerTextChars = "";
+			answerText = false;
+		}
+		else if(qName.equalsIgnoreCase(NUM_VOTES)){
+			answer.setNumVotes(Integer.valueOf(numVotesChars));
+			numVotesChars = "";
+			numVotes = false;
+		}
+		else if(qName.equalsIgnoreCase(Q_TOKEN)){
+			question.getTokens().add(qTokenChars);
+			qTokenChars = "";
+			qToken = false;
+		}
+		else if(qName.equalsIgnoreCase(Q_SENTENCE)){
+			question.getSentences().add(qSentenceChars);
+			qSentenceChars = "";
+			qSentence = false;
+		}
+		else if(qName.equalsIgnoreCase(A_TOKEN)){
+			answer.getTokens().add(aTokenChars);
+			aTokenChars = "";
+			aToken = false;
+		}
+		else if(qName.equalsIgnoreCase(A_SENTENCE)){
+			answer.getSentences().add(aSentenceChars);
+			aSentenceChars = "";
+			aSentence = false;
 		}
 	}
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
-		if(questionText){
-			question.setQuestionText(new String(ch, start, length));
-			questionText = false;
+		if((questionText & !qToken) & (questionText & !qSentence)){
+			questionTextChars+= new String(ch, start, length);
 		}
-		else if(answerText){
-			answer.setAnswerText(new String(ch, start, length));
-			answerText = false;
+		else if((answerText & !aToken) & (answerText & !aSentence)){
+			answerTextChars+= new String(ch, start, length);
 		}
 		else if(numVotes){
-			answer.setNumVotes(Integer.valueOf(new String(ch, start, length)));
-			numVotes = false;
+			numVotesChars+= new String(ch, start, length);
+		}
+		else if(qToken){
+			qTokenChars+= new String(ch, start, length);
+		}
+		else if(qSentence){
+			qSentenceChars+= new String(ch, start, length);
+		}
+		else if(aToken){
+			aTokenChars+= new String(ch, start, length);
+		}
+		else if(aSentence){
+			aSentenceChars+= new String(ch, start, length);
 		}
 	}
 }
