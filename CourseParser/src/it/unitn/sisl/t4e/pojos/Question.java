@@ -9,7 +9,14 @@ public class Question {
 	private List<Answer> answers;
 	private List<String> tokens = new ArrayList<String>();
 	private List<String> sentences = new ArrayList<String>();
+	private Lecture lecture;
 	
+	public Lecture getLecture() {
+		return lecture;
+	}
+	public void setLecture(Lecture lecture) {
+		this.lecture = lecture;
+	}
 	public List<String> getTokens() {
 		return tokens;
 	}
@@ -54,6 +61,7 @@ public class Question {
 		copiedQuestion.setAnswers(question.getAnswers());
 		copiedQuestion.setSentences(question.getSentences());
 		copiedQuestion.setTokens(question.getTokens());
+		copiedQuestion.setLecture(question.getLecture());
 		return copiedQuestion;
 	}
 }

@@ -106,6 +106,15 @@ public class CourseHandler extends DefaultHandler {
 		if(qName.equalsIgnoreCase(COURSE)){
 			List<Lecture> completeLectures = new ArrayList<Lecture>(lectures);
 			course.setLectures(completeLectures);
+			for(Lecture lecture : completeLectures){
+				lecture.setCourse(Course.copy(course));
+				for(Question question : lecture.getQuestions()){
+					question.setLecture(Lecture.copy(lecture));
+					for(Answer answer : question.getAnswers()){
+						answer.setQuestion(Question.copy(question));
+					}
+				}
+			}
 			lectures = new ArrayList<Lecture>();
 			courses.add(Course.copy(course));
 		}

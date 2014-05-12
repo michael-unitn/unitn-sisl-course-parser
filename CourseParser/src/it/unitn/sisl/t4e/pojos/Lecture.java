@@ -7,7 +7,14 @@ public class Lecture {
 	private String lectureTitle;
 	private String lectureDate;
 	private List<Question> questions;
+	private Course course;
 	
+	public Course getCourse() {
+		return course;
+	}
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 	public List<Question> getQuestions() {
 		return questions;
 	}
@@ -45,6 +52,7 @@ public class Lecture {
 		copiedLecture.setLectureTitle(lecture.getLectureTitle());
 		copiedLecture.setLectureDate(lecture.getLectureDate());
 		copiedLecture.setQuestions(lecture.getQuestions());
+		copiedLecture.setCourse(lecture.getCourse());
 		return copiedLecture;
 	}
 }
